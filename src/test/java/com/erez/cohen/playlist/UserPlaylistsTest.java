@@ -32,7 +32,7 @@ public class UserPlaylistsTest {
     @Test
     public void shouldBeAbleToCreateAndDeletePlaylist() throws UnirestException {
         int size = userPlaylists.getUserPlaylists().size();
-        com.hadas.krzysztof.models.Playlist playlist = userPlaylists.createPlaylist(TEST_PLAYLIST_TITLE, TEST_PLAYLIST_DESC);
+        com.erez.cohen.models.Playlist playlist = userPlaylists.createPlaylist(TEST_PLAYLIST_TITLE, TEST_PLAYLIST_DESC);
         assertEquals(TEST_PLAYLIST_TITLE, playlist.getTitle());
         assertEquals(TEST_PLAYLIST_DESC, playlist.getDescription());
         assertEquals(size + 1, userPlaylists.getUserPlaylists().size());
@@ -42,15 +42,15 @@ public class UserPlaylistsTest {
 
     @Test
     public void shouldBeAbleToAddAndRemoveTrackFromPlaylist() throws UnirestException {
-        com.hadas.krzysztof.models.Playlist playlist = userPlaylists.createPlaylist(TEST_PLAYLIST_TITLE, TEST_PLAYLIST_DESC);
+        com.erez.cohen.models.Playlist playlist = userPlaylists.createPlaylist(TEST_PLAYLIST_TITLE, TEST_PLAYLIST_DESC);
         userPlaylists.addTrackToPlaylist(Collections.singletonList(TEST_TRACK_ID), playlist.getUuid());
         assertEquals(java.util.Optional.of(1L), userPlaylists.getUserPlaylists().stream()
                 .filter(p -> p.getTitle().equals(TEST_PLAYLIST_TITLE))
-                .findFirst().map(com.hadas.krzysztof.models.Playlist::getNumberOfTracks));
+                .findFirst().map(com.erez.cohen.models.Playlist::getNumberOfTracks));
         userPlaylists.deleteTrackFromPlaylist(playlist.getUuid(), 0);
         assertEquals(java.util.Optional.of(0L), userPlaylists.getUserPlaylists().stream()
                 .filter(p -> p.getTitle().equals(TEST_PLAYLIST_TITLE))
-                .findFirst().map(com.hadas.krzysztof.models.Playlist::getNumberOfTracks));
+                .findFirst().map(com.erez.cohen.models.Playlist::getNumberOfTracks));
         userPlaylists.deletePlaylist(playlist.getUuid());
     }
 
